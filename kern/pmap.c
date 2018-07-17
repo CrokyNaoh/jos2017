@@ -10,7 +10,7 @@
 #include <kern/kclock.h>
 
 // These variables are set by i386_detect_memory()
-size_t npages;			// Amount of physical memory (in pages)
+size_t npages;			// Amount of physical memory(total) (in pages)
 static size_t npages_basemem;	// Amount of base memory (in pages)
 
 // These variables are set in mem_init()
@@ -102,6 +102,12 @@ boot_alloc(uint32_t n)
 	// to a multiple of PGSIZE.
 	//
 	// LAB 2: Your code here.
+	static size_t pages = npages;
+	size_t need = ROUNDUP(n, PGSIZE) / PGSIZE;
+	if(need > pages) panic("boot_alloc: out of memory\n");
+	pages -= need;
+	result = nextfree;
+	nextfree += ROUNDUP(n,PGSIZE);
 
 	return NULL;
 }
