@@ -10,7 +10,7 @@ void
 forkchild(const char *cur, char branch)
 {
 	char nxt[DEPTH+1];
-
+//cprintf("%04x fc, %s%c\n",sys_getenvid(), cur, branch);
 	if (strlen(cur) >= DEPTH)
 		return;
 
@@ -26,7 +26,9 @@ forktree(const char *cur)
 {
 	cprintf("%04x: I am '%s'\n", sys_getenvid(), cur);
 
+	cprintf("[%08x] %x\n", sys_getenvid(), uvpt[PGNUM(&cur)]);
 	forkchild(cur, '0');
+	cprintf("[%08x] %x\n", sys_getenvid(), uvpt[PGNUM(&cur)]);
 	forkchild(cur, '1');
 }
 
