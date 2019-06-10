@@ -10,7 +10,7 @@
 
 #include <inc/lib.h>
 
-unsigned
+void//unsigned
 primeproc(void)
 {
 	int i, id, p;
